@@ -16,10 +16,15 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh '''
-                    pkill -f teamscal-api || true
-                    nohup java -jar build/libs/*.jar --spring.profiles.active=prod > app.log 2>&1 &
-                '''
+                sshagent(['ec2-ssh-key']) {
+                    sh '''
+                        scp -o StrictHostKeyChecking=no build/libs/*.jar jenkins@13.125.241.52:/home/jenkins/app.jar
+                        ssh -o StrictHostKeyChecking=no jenkins@13.125.241.52 "
+                            pkill -f app.jar || true
+                            nohup java -jar /home/jenkins/app.jar --spring.profiles.active=prod > /home/jenkins/app.log 2>&1 &
+                        "
+                    '''
+                }
             }
         }
     }
