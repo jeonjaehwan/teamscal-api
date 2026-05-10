@@ -16,10 +16,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa build/libs/teamscal-api-0.0.1-SNAPSHOT.jar jenkins@13.125.241.52:/var/lib/jenkins/app.jar'
-                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa docker-compose.yml jenkins@13.125.241.52:/var/lib/jenkins/docker-compose.yml'
-                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa Dockerfile jenkins@13.125.241.52:/var/lib/jenkins/Dockerfile'
-                sh '''ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa jenkins@13.125.241.52 << 'EOF'
+                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa build/libs/teamscal-api-0.0.1-SNAPSHOT.jar jenkins@3.37.87.92:/var/lib/jenkins/app.jar'
+                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa docker-compose.yml jenkins@3.37.87.92:/var/lib/jenkins/docker-compose.yml'
+                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa Dockerfile jenkins@3.37.87.92:/var/lib/jenkins/Dockerfile'
+                sh '''ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa jenkins@3.37.87.92 << 'EOF'
 cd /var/lib/jenkins
 docker-compose down
 docker-compose up -d --build
