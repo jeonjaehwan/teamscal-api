@@ -22,6 +22,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/test").permitAll()
+                        .requestMatchers("/api/rpc").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -34,7 +35,8 @@ public class SecurityConfig {
         config.setAllowedOriginPatterns(List.of(
                 "http://162.120.184.59",
                 "http://162.120.184.59:*",
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "http://localhost:8080"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
