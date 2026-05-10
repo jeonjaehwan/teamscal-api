@@ -11,7 +11,7 @@ services:
 
   app:
     build: .
-    container_name: teamscal-app
+    container_name: teamscal-api
     ports:
       - "8081:8081"
     depends_on:
