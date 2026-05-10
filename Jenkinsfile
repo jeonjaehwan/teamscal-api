@@ -14,17 +14,17 @@ pipeline {
             }
         }
 
-stage('Deploy') {
-    steps {
-        sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa build/libs/teamscal-api-0.0.1-SNAPSHOT.jar jenkins@13.125.241.52:/var/lib/jenkins/app.jar'
-        sh '''ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa jenkins@13.125.241.52 << 'EOF'
-pkill -f app.jar || true
-nohup java -jar /var/lib/jenkins/app.jar --spring.profiles.active=prod > /var/lib/jenkins/app.log 2>&1 &
+        stage('Deploy') {
+            steps {
+                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa build/libs/teamscal-api-0.0.1-SNAPSHOT.jar jenkins@13.125.241.52:/var/lib/jenkins/app.jar'
+                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa docker-compose.yml jenkins@13.125.241.52:/var/lib/jenkins/docker-compose.yml'
+                sh 'scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa Dockerfile jenkins@13.125.241.52:/var/lib/jenkins/Dockerfile'
+                sh '''ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa jenkins@13.125.241.52 << 'EOF'
+cd /var/lib/jenkins
+docker-compose down
+docker-compose up -d --build
 EOF'''
-    }
-}
-
-
-
+            }
+        }
     }
 }
